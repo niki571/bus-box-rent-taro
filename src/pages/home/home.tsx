@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 14:33:36
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-04-23 12:21:15
+ * @LastEditTime: 2022-04-23 21:48:31
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
@@ -24,7 +24,7 @@ interface HomeProps {
   };
 }
 
-// @inject('homeStore')
+@inject('homeStore')
 @observer
 export default class Home extends Component<HomeProps, HomeState> {
   constructor(props: HomeProps) {

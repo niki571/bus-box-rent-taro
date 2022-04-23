@@ -1,19 +1,25 @@
-import { Component } from 'react'
-import { View, Button, Text } from '@tarojs/components'
-import { observer, inject } from 'mobx-react'
+/*
+ * @Author: wuqianying
+ * @Date: 2022-04-22 11:49:29
+ * @LastEditors: wuqianying
+ * @LastEditTime: 2022-04-23 21:23:48
+ */
+import { Component } from 'react';
+import { View, Button, Text } from '@tarojs/components';
+import { observer, inject } from 'mobx-react';
 
-import './index.scss'
+import './index.scss';
 
 type PageStateProps = {
   store: {
-    counterStore: {
-      counter: number,
-      increment: Function,
-      decrement: Function,
-      incrementAsync: Function
-    }
-  }
-}
+    meStore: {
+      counter: number;
+      increment: Function;
+      decrement: Function;
+      incrementAsync: Function;
+    };
+  };
+};
 
 interface Index {
   props: PageStateProps;
@@ -22,33 +28,35 @@ interface Index {
 @inject('store')
 @observer
 class Index extends Component {
-  componentWillMount () { }
+  componentWillMount() {}
 
-  componentDidMount () { }
+  componentDidMount() {}
 
-  componentWillUnmount () { }
+  componentWillUnmount() {}
 
-  componentDidShow () { }
+  componentDidShow() {}
 
-  componentDidHide () { }
+  componentDidHide() {}
 
   increment = () => {
-    const { counterStore } = this.props.store
-    counterStore.increment()
-  }
+    const { meStore } = this.props.store;
+    meStore.increment();
+  };
 
   decrement = () => {
-    const { counterStore } = this.props.store
-    counterStore.decrement()
-  }
+    const { meStore } = this.props.store;
+    meStore.decrement();
+  };
 
   incrementAsync = () => {
-    const { counterStore } = this.props.store
-    counterStore.incrementAsync()
-  }
+    const { meStore } = this.props.store;
+    meStore.incrementAsync();
+  };
 
-  render () {
-    const { counterStore: { counter } } = this.props.store
+  render() {
+    const {
+      meStore: { counter },
+    } = this.props.store;
     return (
       <View className='index'>
         <Button onClick={this.increment}>+</Button>
@@ -56,8 +64,8 @@ class Index extends Component {
         <Button onClick={this.incrementAsync}>Add Async</Button>
         <Text>{counter}</Text>
       </View>
-    )
+    );
   }
 }
 
-export default Index
+export default Index;
