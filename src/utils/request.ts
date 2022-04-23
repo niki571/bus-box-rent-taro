@@ -2,12 +2,12 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 11:58:44
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-04-22 12:15:14
+ * @LastEditTime: 2022-04-23 11:30:57
  */
 import Taro from '@tarojs/taro'
 import config from '../common/config'
 import { getToken } from './loginUtils'
-import { showError } from './wechatUtils'
+import { showError } from './toast'
 
 function request(options: RequestOptions) {
   if (!config.noConsole) {
