@@ -1,11 +1,14 @@
 .page {
-  background-color: #d2d4c1;
   width: 100%;
-  height: 100%;
+  height: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  .banner {
+    height: 295px;
+  }
   .login {
     width: 80%;
-    top: 60px;
-    display: flex;
-    justify-content: center;
   }
 }

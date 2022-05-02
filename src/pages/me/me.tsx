@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 14:33:28
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-02 17:26:10
+ * @LastEditTime: 2022-05-02 20:20:48
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
@@ -59,14 +59,16 @@ export default class Me extends Component<MeProps, MeState> {
     return (
       <View className='page'>
         <AtButton onClick={() => this.getUserProfile()}>获取头像昵称</AtButton>
-        <Block>
-          <Image
-            className='userinfo-avatar'
-            src='{{this.state.userInfo?.avatarUrl}}'
-            mode='center'
-          ></Image>
-          <Text className='userinfo-nickname'>{this.state.userInfo?.nickName}</Text>
-        </Block>
+        {this.state.userInfo && (
+          <View className='userinfo'>
+            <Image
+              className='userinfo-avatar'
+              src={this.state.userInfo?.avatarUrl}
+              mode='scaleToFill'
+            />
+            <Text className='userinfo-nickname'>{this.state.userInfo?.nickName}</Text>
+          </View>
+        )}
       </View>
     );
   }

@@ -2,15 +2,16 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 11:49:29
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-02 16:53:01
+ * @LastEditTime: 2022-05-02 21:10:07
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
-import { View, Button, Text } from '@tarojs/components';
-import { AtForm, AtInput, AtButton } from 'taro-ui';
+import { View, Image } from '@tarojs/components';
+import { AtForm, AtInput, AtButton, AtTag } from 'taro-ui';
 import { observer, inject } from 'mobx-react';
 
 import './login.scss';
+import squirrelImg from '../../assets/images/squirrel.jpeg';
 
 interface LoginState {
   phoneNumber?: string;
@@ -60,6 +61,7 @@ export default class Login extends Component<LoginProps, LoginState> {
     const { loading } = this.props.loginStore;
     return (
       <View className='page'>
+        <Image className='banner' src={squirrelImg} mode='aspectFit' />
         <View className='login'>
           <AtForm>
             <AtInput
@@ -77,7 +79,11 @@ export default class Login extends Component<LoginProps, LoginState> {
               placeholder='请输入'
               value={this.state.authCode}
               onChange={(value) => this.setState({ authCode: value + '' })}
-            />
+            >
+              <AtTag type='primary' circle>
+                发送验证码
+              </AtTag>
+            </AtInput>
             <AtButton onClick={(e) => this.onSubmit(e)}>注册</AtButton>
           </AtForm>
         </View>
