@@ -2,28 +2,30 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 14:33:28
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-04-23 21:55:05
+ * @LastEditTime: 2022-05-02 15:59:04
  */
+import Taro from '@tarojs/taro';
 import { Component } from 'react';
-import { View, Button, Text } from '@tarojs/components';
+import { View, Block, Image, Text } from '@tarojs/components';
 import { observer, inject } from 'mobx-react';
 
-type PageStateProps = {
-  meStore: {
-    counter: number;
-    increment: Function;
-    decrement: Function;
-    incrementAsync: Function;
-  };
-};
+import './me.scss';
 
-interface Index {
-  props: PageStateProps;
+interface MeState {
+  userInfo: {
+    nickName: string;
+  };
+}
+
+interface MeProps {
+  meStore: {
+    loading: boolean;
+  };
 }
 
 @inject('meStore')
 @observer
-class Index extends Component {
+export default class Me extends Component<MeProps, MeState> {
   componentWillMount() {}
 
   componentDidMount() {}
@@ -34,34 +36,34 @@ class Index extends Component {
 
   componentDidHide() {}
 
-  increment = () => {
-    const { meStore } = this.props;
-    meStore.increment();
-  };
-
-  decrement = () => {
-    const { meStore } = this.props;
-    meStore.decrement();
-  };
-
-  incrementAsync = () => {
-    const { meStore } = this.props;
-    meStore.incrementAsync();
-  };
+  getUserProfile() {
+    Taro.getUserProfile({
+      desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: (res) => {
+        this.setState({
+          userInfo: res.userInfo,
+        });
+      },
+    });
+  }
 
   render() {
-    const {
-      meStore: { counter },
-    } = this.props;
     return (
-      <View className='index'>
-        <Button onClick={this.increment}>+</Button>
-        <Button onClick={this.decrement}>-</Button>
-        <Button onClick={this.incrementAsync}>Add Async</Button>
-        <Text>{counter}</Text>
+      <View className='page'>
+        <Block wx:if='{{canIUseGetUserProfile}}' bindtap='getUserProfile'>
+          {' '}
+          获取头像昵称{' '}
+        </Block>
+        <Block>
+          <Image
+            bindtap='bindViewTap'
+            class='userinfo-avatar'
+            src='{{userInfo.avatarUrl}}'
+            mode='center'
+          ></Image>
+          <Text className='userinfo-nickname'>{this.state.userInfo.nickName}</Text>
+        </Block>
       </View>
     );
   }
 }
-
-export default Index;
