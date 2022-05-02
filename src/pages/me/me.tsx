@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 14:33:28
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-02 17:06:31
+ * @LastEditTime: 2022-05-02 17:26:10
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
@@ -15,6 +15,7 @@ import './me.scss';
 interface MeState {
   userInfo?: {
     nickName: string;
+    avatarUrl: string;
   };
 }
 
@@ -57,9 +58,13 @@ export default class Me extends Component<MeProps, MeState> {
   render() {
     return (
       <View className='page'>
-        <AtButton onClick={() => this.getUserProfile()}> 获取头像昵称 </AtButton>
+        <AtButton onClick={() => this.getUserProfile()}>获取头像昵称</AtButton>
         <Block>
-          <Image className='userinfo-avatar' src='{{userInfo.avatarUrl}}' mode='center'></Image>
+          <Image
+            className='userinfo-avatar'
+            src='{{this.state.userInfo?.avatarUrl}}'
+            mode='center'
+          ></Image>
           <Text className='userinfo-nickname'>{this.state.userInfo?.nickName}</Text>
         </Block>
       </View>
