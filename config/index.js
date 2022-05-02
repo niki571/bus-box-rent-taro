@@ -1,3 +1,9 @@
+/*
+ * @Author: wuqianying
+ * @Date: 2022-04-22 11:49:29
+ * @LastEditors: wuqianying
+ * @LastEditTime: 2022-05-02 10:38:07
+ */
 const config = {
   projectName: 'bus-box-rent-taro',
   date: '2022-4-22',
@@ -43,6 +49,7 @@ const config = {
     }
   },
   h5: {
+    esnextModules: ['taro-ui'],
     publicPath: '/',
     staticDirectory: 'static',
     postcss: {
