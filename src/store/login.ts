@@ -1,15 +1,14 @@
 /*
  * @Author: wuqianying
- * @Date: 2022-04-22 11:49:29
+ * @Date: 2022-05-02 10:15:25
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-02 02:38:22
+ * @LastEditTime: 2022-05-02 10:16:28
  */
-
 import { observable } from 'mobx';
 import { BaseStore } from './base.store';
 import { TicketOrderDataModel } from '../models/home';
 
-class HomeStore extends BaseStore {
+class LoginStore extends BaseStore {
   @observable
   showLoadMore: boolean;
 
@@ -23,4 +22,4 @@ class HomeStore extends BaseStore {
   };
 }
 
-export default new HomeStore();
+export default new LoginStore();

@@ -2,10 +2,10 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 11:49:29
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-04-22 15:00:32
+ * @LastEditTime: 2022-05-02 10:20:29
  */
 export default defineAppConfig({
-  pages: ['pages/home/home', 'pages/order/order', 'pages/me/me'],
+  pages: ['pages/login/login', 'pages/home/home', 'pages/order/order', 'pages/me/me'],
   tabBar: {
     selectedColor: '#f4ea2a',
     color: '#b1b1b1',
@@ -37,4 +37,4 @@ export default defineAppConfig({
     navigationBarTitleText: 'WeChat',
     navigationBarTextStyle: 'black',
   },
-})
+});
