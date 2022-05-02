@@ -1,8 +1,8 @@
 /*
  * @Author: wuqianying
- * @Date: 2022-04-22 14:33:44
+ * @Date: 2022-05-02 17:29:59
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-02 18:33:08
+ * @LastEditTime: 2022-05-02 18:33:20
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
@@ -12,22 +12,22 @@ import { observer, inject } from 'mobx-react';
 
 import './order.scss';
 
-interface OrderState {
+interface RentState {
   phoneNumber?: string;
   authCode?: string;
 }
 
-interface OrderProps {
-  orderStore: {
+interface RentProps {
+  rentStore: {
     loading: boolean;
     mockDataAsync: Function;
   };
 }
 
-@inject('orderStore')
+@inject('rentStore')
 @observer
-export default class Order extends Component<OrderProps, OrderState> {
-  constructor(props: OrderProps) {
+export default class Rent extends Component<RentProps, RentState> {
+  constructor(props: RentProps) {
     super(props);
     this.state = {};
   }
@@ -42,7 +42,7 @@ export default class Order extends Component<OrderProps, OrderState> {
   componentDidHide() {}
 
   onReset = () => {
-    const { mockDataAsync } = this.props.orderStore;
+    const { mockDataAsync } = this.props.rentStore;
   };
 
   handleChange = () => {};
@@ -54,7 +54,7 @@ export default class Order extends Component<OrderProps, OrderState> {
   };
 
   render() {
-    const { loading } = this.props.orderStore;
+    const { loading } = this.props.rentStore;
     return <View className='page'>订单</View>;
   }
 }

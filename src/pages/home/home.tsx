@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 14:33:36
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-02 16:55:09
+ * @LastEditTime: 2022-05-02 17:28:26
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
@@ -49,26 +49,6 @@ export default class Home extends Component<HomeProps, HomeState> {
         console.log(6666, userInfo);
       },
     });
-    // const { iv, encryptedData, errMsg } = e.detail;
-    // try {
-    //   if (!this.state.code) {
-    //     showError('code为空');
-    //   }
-    //   if (errMsg.includes('ok')) {
-    //     Taro.showLoading({ title: '正在登录' });
-    //     const loginResult = await login({ iv, encryptedData, code: this.state.code as string });
-    //     console.log(loginResult);
-    //     Taro.hideLoading();
-    //     showSuccess('登录成功！');
-    //   }
-    // } catch (error) {
-    //   // 解密失败重新login
-    //   getWXCode().then((code) => {
-    //     this.setState({ code });
-    //   });
-    //   Taro.hideLoading();
-    //   showError(error.message || error.errMsg);
-    // }
   }
 
   render() {

@@ -2,10 +2,16 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 11:49:29
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-02 10:20:29
+ * @LastEditTime: 2022-05-02 19:38:04
  */
 export default defineAppConfig({
-  pages: ['pages/login/login', 'pages/home/home', 'pages/order/order', 'pages/me/me'],
+  pages: [
+    'pages/login/login',
+    'pages/home/home',
+    'pages/order/order',
+    'pages/me/me',
+    'pages/rent/rent',
+  ],
   tabBar: {
     selectedColor: '#f4ea2a',
     color: '#b1b1b1',
