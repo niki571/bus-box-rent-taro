@@ -2,17 +2,18 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 14:33:28
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-02 15:59:04
+ * @LastEditTime: 2022-05-02 17:06:31
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
-import { View, Block, Image, Text } from '@tarojs/components';
+import { View, Block, Button, Image, Text } from '@tarojs/components';
+import { AtButton } from 'taro-ui';
 import { observer, inject } from 'mobx-react';
 
 import './me.scss';
 
 interface MeState {
-  userInfo: {
+  userInfo?: {
     nickName: string;
   };
 }
@@ -26,6 +27,12 @@ interface MeProps {
 @inject('meStore')
 @observer
 export default class Me extends Component<MeProps, MeState> {
+  constructor(props: MeProps) {
+    super(props);
+    this.state = {
+      userInfo: undefined,
+    };
+  }
   componentWillMount() {}
 
   componentDidMount() {}
@@ -50,18 +57,10 @@ export default class Me extends Component<MeProps, MeState> {
   render() {
     return (
       <View className='page'>
-        <Block wx:if='{{canIUseGetUserProfile}}' bindtap='getUserProfile'>
-          {' '}
-          获取头像昵称{' '}
-        </Block>
+        <AtButton onClick={() => this.getUserProfile()}> 获取头像昵称 </AtButton>
         <Block>
-          <Image
-            bindtap='bindViewTap'
-            class='userinfo-avatar'
-            src='{{userInfo.avatarUrl}}'
-            mode='center'
-          ></Image>
-          <Text className='userinfo-nickname'>{this.state.userInfo.nickName}</Text>
+          <Image className='userinfo-avatar' src='{{userInfo.avatarUrl}}' mode='center'></Image>
+          <Text className='userinfo-nickname'>{this.state.userInfo?.nickName}</Text>
         </Block>
       </View>
     );

@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 14:33:36
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-02 10:21:49
+ * @LastEditTime: 2022-05-02 16:55:09
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
@@ -72,12 +72,6 @@ export default class Home extends Component<HomeProps, HomeState> {
   }
 
   render() {
-    return (
-      <View className='page'>
-        <Button openType='getUserInfo' onGetUserInfo={(e) => this.handleGetUserInfo(e)}>
-          登录
-        </Button>
-      </View>
-    );
+    return <View className='page'>33333</View>;
   }
 }

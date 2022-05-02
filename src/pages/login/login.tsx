@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 11:49:29
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-02 15:59:53
+ * @LastEditTime: 2022-05-02 16:53:01
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
@@ -50,14 +50,18 @@ export default class Login extends Component<LoginProps, LoginState> {
 
   handleChange = () => {};
 
-  onSubmit = () => {};
+  onSubmit = (e) => {
+    Taro.switchTab({
+      url: '/pages/home/home',
+    });
+  };
 
   render() {
     const { loading } = this.props.loginStore;
     return (
       <View className='page'>
         <View className='login'>
-          <AtForm onSubmit={this.onSubmit.bind(this)} onReset={this.onReset.bind(this)}>
+          <AtForm>
             <AtInput
               name='phoneNumber'
               title='手机号'
@@ -74,7 +78,7 @@ export default class Login extends Component<LoginProps, LoginState> {
               value={this.state.authCode}
               onChange={(value) => this.setState({ authCode: value + '' })}
             />
-            <AtButton formType='submit'>注册</AtButton>
+            <AtButton onClick={(e) => this.onSubmit(e)}>注册</AtButton>
           </AtForm>
         </View>
       </View>
