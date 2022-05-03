@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-05-02 17:29:59
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-04 00:07:58
+ * @LastEditTime: 2022-05-04 00:12:26
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
@@ -59,7 +59,11 @@ export default class Rent extends Component<RentProps, RentState> {
     }
   }
 
-  componentDidHide() {}
+  componentDidHide() {
+    this.timer && clearTimeout(this.timer);
+  }
+
+  handleChange() {}
 
   async handleConfirm() {
     let travelArr = await Taro.getStorageSync('travelInfo');

@@ -2,38 +2,32 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 14:33:28
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-02 20:20:48
+ * @LastEditTime: 2022-05-04 00:23:48
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
 import { View, Block, Button, Image, Text } from '@tarojs/components';
-import { AtButton } from 'taro-ui';
 import { observer, inject } from 'mobx-react';
 
 import './me.scss';
 
-interface MeState {
-  userInfo?: {
-    nickName: string;
-    avatarUrl: string;
-  };
-}
+interface MeState {}
 
 interface MeProps {
   meStore: {
     loading: boolean;
   };
+  loginStore: {
+    userProfile: {
+      nickName: string;
+      avatarUrl: string;
+    };
+  };
 }
 
-@inject('meStore')
+@inject('meStore', 'loginStore')
 @observer
 export default class Me extends Component<MeProps, MeState> {
-  constructor(props: MeProps) {
-    super(props);
-    this.state = {
-      userInfo: undefined,
-    };
-  }
   componentWillMount() {}
 
   componentDidMount() {}
@@ -44,29 +38,14 @@ export default class Me extends Component<MeProps, MeState> {
 
   componentDidHide() {}
 
-  getUserProfile() {
-    Taro.getUserProfile({
-      desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-      success: (res) => {
-        this.setState({
-          userInfo: res.userInfo,
-        });
-      },
-    });
-  }
-
   render() {
+    const { userProfile } = this.props.loginStore;
     return (
       <View className='page'>
-        <AtButton onClick={() => this.getUserProfile()}>获取头像昵称</AtButton>
-        {this.state.userInfo && (
+        {userProfile && (
           <View className='userinfo'>
-            <Image
-              className='userinfo-avatar'
-              src={this.state.userInfo?.avatarUrl}
-              mode='scaleToFill'
-            />
-            <Text className='userinfo-nickname'>{this.state.userInfo?.nickName}</Text>
+            <Image className='userinfo-avatar' src={userProfile?.avatarUrl} mode='scaleToFill' />
+            <Text className='userinfo-nickname'>{userProfile?.nickName}</Text>
           </View>
         )}
       </View>

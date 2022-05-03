@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 11:49:29
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-04 00:09:30
+ * @LastEditTime: 2022-05-04 00:19:08
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
@@ -24,7 +24,7 @@ interface LoginState {
 interface LoginProps {
   loginStore: {
     loading: boolean;
-    mockDataAsync: Function;
+    sendUserProfile: Function;
   };
 }
 
@@ -74,10 +74,18 @@ export default class Login extends Component<LoginProps, LoginState> {
     }
   };
 
-  handleChange = () => {};
+  getUserProfile() {
+    Taro.getUserProfile({
+      desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: (res) => {
+        this.props.loginStore.sendUserProfile(res.userInfo);
+      },
+    });
+  }
 
   onSubmit = (e) => {
     if (this.state.phoneNumber && testPhone(this.state.phoneNumber) && this.state.authCode) {
+      this.getUserProfile();
       Taro.setStorageSync('phoneNumber', hidePhone(this.state.phoneNumber));
       Taro.switchTab({
         url: '/pages/home/home',

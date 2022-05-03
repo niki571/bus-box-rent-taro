@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 14:33:36
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-04 00:08:52
+ * @LastEditTime: 2022-05-04 00:15:23
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
@@ -65,6 +65,9 @@ export default class Home extends Component<HomeProps, HomeState> {
       };
       this.setState({ travelArr });
       Taro.setStorageSync('travelInfo', travelArr);
+      Taro.switchTab({
+        url: '/pages/order/order',
+      });
     } else {
       // 租借
       Taro.navigateTo({
