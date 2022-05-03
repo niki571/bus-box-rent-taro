@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-05-02 17:29:59
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-03 20:30:46
+ * @LastEditTime: 2022-05-03 20:52:53
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
@@ -11,12 +11,13 @@ import { AtModal, AtModalHeader, AtModalContent, AtModalAction, AtInput } from '
 import { observer, inject } from 'mobx-react';
 
 import { showMessage } from '../../utils/toast';
-import { getRandomBusBoxData } from '../../models/rent';
+import { BusBoxData, getRandomBusBoxData } from '../../models/rent';
 
 import './rent.scss';
 
 interface RentState {
   showModal: boolean;
+  boxArr?: BusBoxData[];
 }
 
 interface RentProps {
@@ -35,7 +36,16 @@ export default class Rent extends Component<RentProps, RentState> {
       showModal: false,
     };
   }
-  componentWillMount() {}
+  componentWillMount() {
+    let boxArr = Taro.getStorageSync('boxesInfo');
+    if (boxArr) {
+      this.setState({ boxArr });
+    } else {
+      boxArr = getRandomBusBoxData();
+      Taro.setStorageSync('boxesInfo', boxArr);
+      this.setState({ boxArr });
+    }
+  }
 
   componentDidMount() {}
 
@@ -75,13 +85,13 @@ export default class Rent extends Component<RentProps, RentState> {
 
   render() {
     const { loading } = this.props.rentStore;
-    const boxArr = getRandomBusBoxData();
+
     return (
       <View className='page'>
         <View className='title'>行李舱</View>
         <View className='container'>
-          {boxArr &&
-            boxArr.map((item, i) => {
+          {this.state.boxArr &&
+            this.state.boxArr.map((item, i) => {
               return (
                 <View
                   key={i}

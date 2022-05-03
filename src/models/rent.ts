@@ -2,9 +2,9 @@
  * @Author: wuqianying
  * @Date: 2022-05-03 18:13:51
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-03 19:38:22
+ * @LastEditTime: 2022-05-03 20:49:42
  */
-interface BusBoxData {
+export interface BusBoxData {
   index: number;
   empty: boolean;
 }
