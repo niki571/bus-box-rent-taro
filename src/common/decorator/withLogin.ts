@@ -4,34 +4,34 @@
  * @LastEditors: wuqianying
  * @LastEditTime: 2022-04-22 14:08:09
  */
-import Taro from '@tarojs/taro'
+import Taro from '@tarojs/taro';
 
-import { login } from '../../utils/loginUtils'
+import { login } from '../../utils/login';
 
 function withLogin() {
   return function (Component) {
     return class WithLogin extends Component {
       async componentWillMount() {
         if (super.componentWillMount) {
-          let res = await autoLogin()
+          let res = await autoLogin();
           if (!res) {
             // Taro.reLaunch({ url: "../login/login" });
-            return
+            return;
           }
-          this.props.authorizationStore.update()
-          super.componentWillMount()
+          this.props.authorizationStore.update();
+          super.componentWillMount();
         }
       }
-    } as any
-  }
+    } as any;
+  };
 
   async function autoLogin() {
-    let authorized = Taro.getStorageSync('authorized')
+    let authorized = Taro.getStorageSync('authorized');
     if (!authorized || (new Date(authorized['expireTime']) as any) - (new Date() as any) < 0) {
-      return await login()
+      return await login();
     }
-    return authorized
+    return authorized;
   }
 }
 
-export default withLogin
+export default withLogin;

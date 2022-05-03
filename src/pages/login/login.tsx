@@ -2,13 +2,15 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 11:49:29
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-02 21:10:07
+ * @LastEditTime: 2022-05-03 13:04:11
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
 import { View, Image } from '@tarojs/components';
 import { AtForm, AtInput, AtButton, AtTag } from 'taro-ui';
 import { observer, inject } from 'mobx-react';
+import { showMessage } from '../../utils/toast';
+import { testPhone } from '../../utils/utils';
 
 import './login.scss';
 import squirrelImg from '../../assets/images/squirrel.jpeg';
@@ -16,6 +18,7 @@ import squirrelImg from '../../assets/images/squirrel.jpeg';
 interface LoginState {
   phoneNumber?: string;
   authCode?: string;
+  authText: string;
 }
 
 interface LoginProps {
@@ -33,6 +36,7 @@ export default class Login extends Component<LoginProps, LoginState> {
     this.state = {
       phoneNumber: '',
       authCode: '',
+      authText: '发送验证码',
     };
   }
   componentWillMount() {}
@@ -41,20 +45,42 @@ export default class Login extends Component<LoginProps, LoginState> {
 
   componentWillUnmount() {}
 
+  timer: ReturnType<typeof setInterval> | null;
+
   componentDidShow() {}
 
   componentDidHide() {}
 
-  onReset = () => {
-    const { mockDataAsync } = this.props.loginStore;
+  sentAuthCode = () => {
+    if (!this.state.phoneNumber || !testPhone(this.state.phoneNumber)) {
+      return showMessage('请输入正确的手机号！');
+    }
+    if (this.state.authText === '发送验证码') {
+      let num = 60;
+      this.timer = setInterval(() => {
+        if (num === 0) {
+          this.setState({ authText: '发送验证码' });
+          this.timer && clearInterval(this.timer);
+        } else {
+          if (num === 55) {
+            this.setState({ authCode: '564965' });
+          }
+          this.setState({ authText: num-- + '秒' });
+        }
+      }, 1000);
+    }
   };
 
   handleChange = () => {};
 
   onSubmit = (e) => {
-    Taro.switchTab({
-      url: '/pages/home/home',
-    });
+    if (this.state.phoneNumber && testPhone(this.state.phoneNumber) && this.state.authCode) {
+      Taro.switchTab({
+        url: '/pages/home/home',
+      });
+    } else {
+      showMessage('请输入手机号和验证码！');
+    }
   };
 
   render() {
@@ -80,8 +106,8 @@ export default class Login extends Component<LoginProps, LoginState> {
               value={this.state.authCode}
               onChange={(value) => this.setState({ authCode: value + '' })}
             >
-              <AtTag type='primary' circle>
-                发送验证码
+              <AtTag type='primary' circle onClick={() => this.sentAuthCode()}>
+                {this.state.authText}
               </AtTag>
             </AtInput>
             <AtButton onClick={(e) => this.onSubmit(e)}>注册</AtButton>

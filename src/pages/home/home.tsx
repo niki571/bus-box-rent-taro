@@ -11,7 +11,7 @@ import { observer, inject } from 'mobx-react';
 
 import './home.scss';
 import withLogin from '../../common/decorator/withLogin';
-import { getWXCode, login } from '../../utils/loginUtils';
+import { getWXCode, login } from '../../utils/login';
 import { showSuccess, showError } from '../../utils/toast';
 
 interface HomeState {
