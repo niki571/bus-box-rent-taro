@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 14:33:36
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-02 17:28:26
+ * @LastEditTime: 2022-05-03 14:30:25
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
@@ -10,8 +10,6 @@ import { View, Button } from '@tarojs/components';
 import { observer, inject } from 'mobx-react';
 
 import './home.scss';
-import withLogin from '../../common/decorator/withLogin';
-import { getWXCode, login } from '../../utils/login';
 import { showSuccess, showError } from '../../utils/toast';
 
 interface HomeState {
@@ -27,19 +25,7 @@ interface HomeProps {
 @inject('homeStore')
 @observer
 export default class Home extends Component<HomeProps, HomeState> {
-  constructor(props: HomeProps) {
-    super(props);
-    this.state = {
-      code: '',
-    };
-  }
-
-  async componentWillMount() {
-    if (!this.state.code) {
-      const code = await getWXCode();
-      this.setState({ code });
-    }
-  }
+  async componentWillMount() {}
 
   async handleGetUserInfo(e) {
     debugger;
@@ -52,6 +38,6 @@ export default class Home extends Component<HomeProps, HomeState> {
   }
 
   render() {
-    return <View className='page'>33333</View>;
+    return <View className='page'>333</View>;
   }
 }

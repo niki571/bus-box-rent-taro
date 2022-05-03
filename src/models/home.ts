@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-05-02 02:23:58
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-02 02:29:45
+ * @LastEditTime: 2022-05-03 14:30:55
  */
 export interface TicketOrderDataModel {
   from: string;
@@ -12,6 +12,25 @@ export interface TicketOrderDataModel {
   departureTime: Date;
   arrivalTime: Date;
 }
+
+// 10个
+const STATIONS = [
+  '上海虹桥',
+  '杭州东站',
+  '昆山南站',
+  '南京南站',
+  '苏州北站',
+  '苏州园区站',
+  '无锡东站',
+  '宁波站',
+  '台州站',
+  '温州站',
+];
+
+// 10个
+const BUSNOS = ['G13', 'G16', 'G19', 'G73', 'G74', 'G75', 'G76', 'G77', 'G92', 'G93'];
+
+const GATES = ['A', 'B'];
 
 export const TicketOrderData = [
   {
@@ -32,10 +51,14 @@ export const TicketOrderData = [
   },
 ];
 
-export interface ArticleDetailDataModel {
-  id: number;
-  describe: string;
-  source: string;
-  author: string;
-  createTime: string;
+export function getRandomTicketOrderData() {
+  // 行程个数
+  const travelNum = Math.ceil(Math.random() * 10);
+  // 行程数组
+  new Array(travelNum).fill(1).map(() => ({
+    from: STATIONS[Math.floor(Math.random() * 10)],
+    to: STATIONS[Math.floor(Math.random() * 10)],
+    busNo: BUSNOS[Math.floor(Math.random() * 10)],
+    ticketGate: Math.ceil(Math.random() * 20) + 'A',
+  }));
 }
