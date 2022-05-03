@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-05-02 02:23:58
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-03 16:09:38
+ * @LastEditTime: 2022-05-03 17:42:02
  */
 import moment from 'moment';
 import { randomPastTravelTime, randomNowTravelTime } from '../utils/utils';
@@ -38,7 +38,7 @@ export function getRandomTicketOrderData(): TicketOrderData[] {
   // 行程个数
   const travelNum = Math.ceil(Math.random() * 5);
   // 行程数组
-  const travelArr = new Array(travelNum).fill(1).map(() => {
+  let travelArr = new Array(travelNum).fill(1).map(() => {
     const [departureTime, arrivalTime] = randomPastTravelTime();
     const item = {
       from: STATIONS[Math.floor(Math.random() * 10)],
@@ -49,6 +49,9 @@ export function getRandomTicketOrderData(): TicketOrderData[] {
       arrivalTime,
     };
     return item;
+  });
+  travelArr = travelArr.filter((item) => {
+    return item.from !== item.to;
   });
   travelArr.sort((a, b) => {
     if (moment(a.departureTime).isBefore(moment(b.departureTime))) {
