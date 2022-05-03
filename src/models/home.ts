@@ -2,8 +2,11 @@
  * @Author: wuqianying
  * @Date: 2022-05-02 02:23:58
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-03 14:30:55
+ * @LastEditTime: 2022-05-03 15:43:20
  */
+import moment from 'moment';
+import { randomPastTravelTime } from '../utils/utils';
+
 export interface TicketOrderDataModel {
   from: string;
   to: string;
@@ -53,12 +56,26 @@ export const TicketOrderData = [
 
 export function getRandomTicketOrderData() {
   // 行程个数
-  const travelNum = Math.ceil(Math.random() * 10);
+  const travelNum = Math.ceil(Math.random() * 5);
   // 行程数组
-  new Array(travelNum).fill(1).map(() => ({
-    from: STATIONS[Math.floor(Math.random() * 10)],
-    to: STATIONS[Math.floor(Math.random() * 10)],
-    busNo: BUSNOS[Math.floor(Math.random() * 10)],
-    ticketGate: Math.ceil(Math.random() * 20) + 'A',
-  }));
+  const travelArr = new Array(travelNum).fill(1).map(() => {
+    const [departureTime, arrivalTime] = randomPastTravelTime();
+    const a = {
+      from: STATIONS[Math.floor(Math.random() * 10)],
+      to: STATIONS[Math.floor(Math.random() * 10)],
+      busNo: `${BUSNOS[Math.floor(Math.random() * 10)]}${Math.floor(Math.random() * 100)}`,
+      ticketGate: Math.ceil(Math.random() * 20) + 'A',
+      departureTime,
+      arrivalTime,
+    };
+    return a;
+  });
+  travelArr.sort((a, b) => {
+    if (moment(a.departureTime).isBefore(moment(b.departureTime))) {
+      return 1;
+    } else {
+      return -1;
+    }
+  });
+  return travelArr;
 }

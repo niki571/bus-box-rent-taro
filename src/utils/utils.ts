@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-05-03 12:53:12
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-03 14:29:09
+ * @LastEditTime: 2022-05-03 15:38:11
  */
 import moment from 'moment';
 
@@ -10,7 +10,7 @@ export function testPhone(phoneNumber) {
   return /^1[3456789]\d{9}$/.test(phoneNumber);
 }
 
-const randomDate = (startDate, endDate) => {
+const randomTime = (startDate, endDate) => {
   let date = new Date(+startDate + Math.random() * (endDate - startDate));
   let hour = (0 + Math.random() * (23 - 0)) | 0;
   let minute = (0 + Math.random() * (59 - 0)) | 0;
@@ -21,10 +21,17 @@ const randomDate = (startDate, endDate) => {
   return date;
 };
 
-export const randomTime = () => {
+export const randomPastTravelTime = () => {
   // 生产当月的开始日期
-  const startDate = moment().startOf('month').toDate();
+  const startDate = moment().subtract(1, 'months').startOf('month').toDate();
   // 截止日期
   const endDate = new Date();
-  return moment(randomDate(startDate, endDate)).format('YYYY-MM-DD HH:mm:ss');
+  // 出发时间
+  const departureTime = randomTime(startDate, endDate);
+  // 到达时间
+  const arrivalTime = new Date(+departureTime + 30 * 60 * 1000 + Math.random() * 15 * 60 * 1000);
+  return [
+    moment(departureTime).format('YYYY-MM-DD HH:mm:ss'),
+    moment(arrivalTime).format('YYYY-MM-DD HH:mm:ss'),
+  ];
 };
