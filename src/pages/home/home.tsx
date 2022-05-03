@@ -2,17 +2,19 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 14:33:36
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-03 21:08:51
+ * @LastEditTime: 2022-05-03 23:01:10
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
 import { View, Text } from '@tarojs/components';
-import { AtDivider, AtTag } from 'taro-ui';
+import { AtTag, AtDivider } from 'taro-ui';
+
 import { observer, inject } from 'mobx-react';
 import moment from 'moment';
 
 import './home.scss';
 import { TicketOrderData, getRandomTicketOrderData } from '../../models/home';
+import { RentOrderData } from '../../models/order';
 
 interface HomeState {
   phoneNumber: string;
@@ -43,9 +45,23 @@ export default class Home extends Component<HomeProps, HomeState> {
   }
 
   rentBox() {
-    Taro.navigateTo({
-      url: '/pages/rent/rent',
-    });
+    // 归还
+    if (this.state.travelArr[0].rentOrderDetail) {
+      let travelArr = this.state.travelArr.slice();
+      let { boxId, startTime } = travelArr[0].rentOrderDetail as RentOrderData;
+      travelArr[0].rentOrderDetail = {
+        boxId,
+        startTime,
+        endTime: moment(new Date()).format('YYYY-MM-DD HH:mm'),
+      };
+      this.setState({ travelArr });
+      Taro.setStorageSync('travelInfo', travelArr);
+    } else {
+      // 租借
+      Taro.navigateTo({
+        url: '/pages/rent/rent',
+      });
+    }
   }
 
   renderCard(travelArr, isToday) {
@@ -77,7 +93,7 @@ export default class Home extends Component<HomeProps, HomeState> {
               <Text>{this.state.phoneNumber}</Text>
               {isToday && (
                 <AtTag circle type='normal' className='tag' onClick={() => this.rentBox()}>
-                  租借行李舱
+                  {item.rentOrderDetail ? '归还行李舱' : '租借行李舱'}
                 </AtTag>
               )}
             </View>

@@ -1,0 +1,44 @@
+.page {
+  .card-out {
+    border-radius: 20px;
+    background-color: #f5f2e2;
+    margin: 25px 0;
+    padding: 15px 25px;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 35px;
+    .order {
+      display: flex;
+      align-items: center;
+      .icon {
+        height: 50px;
+        width: 50px;
+      }
+    }
+    .status {
+      color: #333;
+      font-weight: 600;
+    }
+    height: 60px;
+    line-height: 60px;
+  }
+  .line {
+    position: relative;
+    padding-left: 40px;
+    font-size: 32px;
+    &::before {
+      content: ' ';
+      position: absolute;
+      left: -4px;
+      top: 15px;
+      width: 20px;
+      height: 20px;
+      background-color: #d2ca32;
+      border-radius: 10px;
+    }
+  }
+
+}
