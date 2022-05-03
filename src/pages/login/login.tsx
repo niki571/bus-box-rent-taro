@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 11:49:29
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-03 17:21:48
+ * @LastEditTime: 2022-05-04 00:09:30
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
@@ -39,6 +39,7 @@ export default class Login extends Component<LoginProps, LoginState> {
       authText: '发送验证码',
     };
   }
+
   componentWillMount() {}
 
   componentDidMount() {}
@@ -49,7 +50,9 @@ export default class Login extends Component<LoginProps, LoginState> {
 
   componentDidShow() {}
 
-  componentDidHide() {}
+  componentDidHide() {
+    this.timer && clearInterval(this.timer);
+  }
 
   sentAuthCode = () => {
     if (!this.state.phoneNumber || !testPhone(this.state.phoneNumber)) {
@@ -62,7 +65,7 @@ export default class Login extends Component<LoginProps, LoginState> {
           this.setState({ authText: '发送验证码' });
           this.timer && clearInterval(this.timer);
         } else {
-          if (num === 55) {
+          if (num === 58) {
             this.setState({ authCode: '564965' });
           }
           this.setState({ authText: num-- + '秒' });

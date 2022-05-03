@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-05-02 17:29:59
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-03 21:21:24
+ * @LastEditTime: 2022-05-04 00:07:58
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
@@ -37,16 +37,8 @@ export default class Rent extends Component<RentProps, RentState> {
       showModal: false,
     };
   }
-  componentWillMount() {
-    let boxArr = Taro.getStorageSync('boxesInfo');
-    if (boxArr) {
-      this.setState({ boxArr });
-    } else {
-      boxArr = getRandomBusBoxData();
-      Taro.setStorageSync('boxesInfo', boxArr);
-      this.setState({ boxArr });
-    }
-  }
+
+  componentWillMount() {}
 
   componentDidMount() {}
 
@@ -56,14 +48,21 @@ export default class Rent extends Component<RentProps, RentState> {
   boxId: number;
   timer: ReturnType<typeof setTimeout> | null;
 
-  componentDidShow() {}
+  async componentDidShow() {
+    let boxArr = await Taro.getStorageSync('boxesInfo');
+    if (boxArr) {
+      this.setState({ boxArr });
+    } else {
+      boxArr = getRandomBusBoxData();
+      Taro.setStorageSync('boxesInfo', boxArr);
+      this.setState({ boxArr });
+    }
+  }
 
   componentDidHide() {}
 
-  handleChange() {}
-
-  handleConfirm() {
-    let travelArr = Taro.getStorageSync('travelInfo');
+  async handleConfirm() {
+    let travelArr = await Taro.getStorageSync('travelInfo');
     travelArr[0].rentOrderDetail = {
       boxId: this.boxId,
       startTime: moment(new Date()).format('YYYY-MM-DD HH:mm'),

@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 14:33:36
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-03 23:01:10
+ * @LastEditTime: 2022-05-04 00:08:52
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
@@ -30,11 +30,20 @@ interface HomeProps {
 @inject('homeStore')
 @observer
 export default class Home extends Component<HomeProps, HomeState> {
-  async componentWillMount() {
-    const phoneNumber = Taro.getStorageSync('phoneNumber');
+  constructor(props: HomeProps) {
+    super(props);
+    this.state = {
+      phoneNumber: '',
+      travelArr: [],
+    };
+  }
+  componentWillMount() {}
+
+  async componentDidShow() {
+    const phoneNumber = await Taro.getStorageSync('phoneNumber');
     this.setState({ phoneNumber });
 
-    let travelArr = Taro.getStorageSync('travelInfo');
+    let travelArr = await Taro.getStorageSync('travelInfo');
     if (travelArr) {
       this.setState({ travelArr });
     } else {
@@ -91,7 +100,8 @@ export default class Home extends Component<HomeProps, HomeState> {
 
             <View className='card-btm'>
               <Text>{this.state.phoneNumber}</Text>
-              {isToday && (
+              {isToday && item.rentOrderDetail?.endTime && '租借订单完成'}
+              {isToday && !item.rentOrderDetail?.endTime && (
                 <AtTag circle type='normal' className='tag' onClick={() => this.rentBox()}>
                   {item.rentOrderDetail ? '归还行李舱' : '租借行李舱'}
                 </AtTag>

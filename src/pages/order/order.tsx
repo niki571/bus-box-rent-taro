@@ -2,11 +2,12 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 14:33:44
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-03 23:15:49
+ * @LastEditTime: 2022-05-04 00:06:46
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
 import { View, Image, Text } from '@tarojs/components';
+import { AtDivider } from 'taro-ui';
 import { observer, inject } from 'mobx-react';
 
 import { RentOrderData } from '../../models/order';
@@ -20,7 +21,7 @@ type OrderType = {
   busNo: string;
 };
 interface OrderState {
-  order: OrderType & RentOrderData;
+  order?: OrderType & RentOrderData;
 }
 
 interface OrderProps {
@@ -32,8 +33,20 @@ interface OrderProps {
 @inject('orderStore')
 @observer
 export default class Order extends Component<OrderProps, OrderState> {
-  componentWillMount() {
-    let travelArr = Taro.getStorageSync('travelInfo');
+  constructor(props: OrderProps) {
+    super(props);
+    this.state = {
+      order: undefined,
+    };
+  }
+  componentWillMount() {}
+
+  componentDidMount() {}
+
+  componentWillUnmount() {}
+
+  async componentDidShow() {
+    let travelArr = await Taro.getStorageSync('travelInfo');
     if (travelArr[0].rentOrderDetail) {
       const { from, to, busNo } = travelArr[0];
       this.setState({
@@ -47,15 +60,17 @@ export default class Order extends Component<OrderProps, OrderState> {
     }
   }
 
-  componentDidMount() {}
-
-  componentWillUnmount() {}
-
-  componentDidShow() {}
-
   componentDidHide() {}
 
   render() {
+    if (!this.state.order) {
+      return (
+        <View className='page'>
+          <View className='title'>租借订单</View>
+          <AtDivider content='暂无订单' fontColor='#b3b185' lineColor='#b3b185' />
+        </View>
+      );
+    }
     const { from, to, busNo, boxId, startTime, endTime } = this.state.order;
     return (
       <View className='page'>
