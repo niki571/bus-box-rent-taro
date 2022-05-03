@@ -2,18 +2,18 @@
  * @Author: wuqianying
  * @Date: 2022-05-02 02:23:58
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-03 15:43:20
+ * @LastEditTime: 2022-05-03 16:09:38
  */
 import moment from 'moment';
-import { randomPastTravelTime } from '../utils/utils';
+import { randomPastTravelTime, randomNowTravelTime } from '../utils/utils';
 
-export interface TicketOrderDataModel {
+export interface TicketOrderData {
   from: string;
   to: string;
   busNo: string;
   ticketGate: string;
-  departureTime: Date;
-  arrivalTime: Date;
+  departureTime: string;
+  arrivalTime: string;
 }
 
 // 10个
@@ -33,42 +33,22 @@ const STATIONS = [
 // 10个
 const BUSNOS = ['G13', 'G16', 'G19', 'G73', 'G74', 'G75', 'G76', 'G77', 'G92', 'G93'];
 
-const GATES = ['A', 'B'];
-
-export const TicketOrderData = [
-  {
-    from: '上海虹桥',
-    to: '杭州东站',
-    busNo: 'G7550',
-    ticketGate: '17A',
-    departureTime: '2022-03-28 14:54:00',
-    arrivalTime: '2022-03-28 16:04:00',
-  },
-  {
-    from: '上海虹桥',
-    to: '无锡',
-    busNo: 'G7142',
-    ticketGate: '14B',
-    departureTime: '2022-04-12 09:23:00',
-    arrivalTime: '2022-04-12 09:54:00',
-  },
-];
-
-export function getRandomTicketOrderData() {
+export function getRandomTicketOrderData(): TicketOrderData[] {
+  const [nowdeptTime, nowArrTime] = randomNowTravelTime();
   // 行程个数
   const travelNum = Math.ceil(Math.random() * 5);
   // 行程数组
   const travelArr = new Array(travelNum).fill(1).map(() => {
     const [departureTime, arrivalTime] = randomPastTravelTime();
-    const a = {
+    const item = {
       from: STATIONS[Math.floor(Math.random() * 10)],
       to: STATIONS[Math.floor(Math.random() * 10)],
       busNo: `${BUSNOS[Math.floor(Math.random() * 10)]}${Math.floor(Math.random() * 100)}`,
-      ticketGate: Math.ceil(Math.random() * 20) + 'A',
+      ticketGate: Math.ceil(Math.random() * 20) + (Math.random() > 0.5 ? 'A' : 'B'),
       departureTime,
       arrivalTime,
     };
-    return a;
+    return item;
   });
   travelArr.sort((a, b) => {
     if (moment(a.departureTime).isBefore(moment(b.departureTime))) {
@@ -77,5 +57,7 @@ export function getRandomTicketOrderData() {
       return -1;
     }
   });
+  travelArr[0].departureTime = nowdeptTime;
+  travelArr[0].arrivalTime = nowArrTime;
   return travelArr;
 }

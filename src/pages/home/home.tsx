@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 14:33:36
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-03 15:31:01
+ * @LastEditTime: 2022-05-03 16:10:54
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
@@ -11,7 +11,6 @@ import { observer, inject } from 'mobx-react';
 
 import './home.scss';
 import { getRandomTicketOrderData } from '../../models/home';
-// import { randomPastTravelTime } from '../../utils/utils';
 
 interface HomeState {
   code: string;
@@ -40,7 +39,7 @@ export default class Home extends Component<HomeProps, HomeState> {
 
   render() {
     const travelArr = getRandomTicketOrderData();
-
+    // return <Text>{randomNowTravelTime()}</Text>;
     return (
       <View className='page'>
         {travelArr &&
