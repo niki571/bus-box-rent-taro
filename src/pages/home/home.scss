@@ -1,27 +1,8 @@
 .page {
-  .title {
-    margin: 30px;
-    position: relative;
-    height: 2.8rem;
-    color: #333;
-    font-size: 60px;
-    font-weight: 700;
-    &::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      display: inline-block;
-      width: 2.56rem;
-      height: 4PX;
-      border-radius: 1PX;
-      background-color: #f4ea2a;
-    }
-  }
   .card-out {
     border-radius: 20px;
     background-color: #f5f2e2;
-    margin: 25px;
+    margin: 25px 0;
     padding: 15px 25px;
     .gate {
       display: flex;

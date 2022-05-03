@@ -2,12 +2,12 @@
  * @Author: wuqianying
  * @Date: 2022-05-02 02:23:58
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-03 17:42:02
+ * @LastEditTime: 2022-05-03 19:28:40
  */
 import moment from 'moment';
 import { randomPastTravelTime, randomNowTravelTime } from '../utils/utils';
 
-export interface TicketOrderData {
+interface TicketOrderData {
   from: string;
   to: string;
   busNo: string;

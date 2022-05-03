@@ -2,13 +2,15 @@
  * @Author: wuqianying
  * @Date: 2022-05-02 17:29:59
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-02 19:40:05
+ * @LastEditTime: 2022-05-03 19:52:59
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
 import { View, Button, Text } from '@tarojs/components';
 import { AtForm, AtInput, AtButton } from 'taro-ui';
 import { observer, inject } from 'mobx-react';
+
+import { getRandomBusBoxData } from '../../models/rent';
 
 import './rent.scss';
 
@@ -41,13 +43,7 @@ export default class Rent extends Component<RentProps, RentState> {
 
   componentDidHide() {}
 
-  onReset = () => {
-    const { mockDataAsync } = this.props.rentStore;
-  };
-
-  handleChange = () => {};
-
-  onSubmit = (e) => {
+  handleBoxClick = () => {
     Taro.switchTab({
       url: '/pages/home/home',
     });
@@ -55,6 +51,25 @@ export default class Rent extends Component<RentProps, RentState> {
 
   render() {
     const { loading } = this.props.rentStore;
-    return <View className='page'>订单</View>;
+    const boxArr = getRandomBusBoxData();
+    return (
+      <View className='page'>
+        <View className='title'>行李舱</View>
+        <View className='container'>
+          {boxArr &&
+            boxArr.map((item, i) => {
+              return (
+                <View
+                  key={i}
+                  className={item.empty ? 'box empty' : 'box full'}
+                  onClick={() => this.handleBoxClick()}
+                >
+                  {item.index + 1}
+                </View>
+              );
+            })}
+        </View>
+      </View>
+    );
   }
 }

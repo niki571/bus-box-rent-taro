@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-05-03 12:53:12
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-03 17:20:10
+ * @LastEditTime: 2022-05-03 18:01:49
  */
 import moment from 'moment';
 
@@ -44,7 +44,7 @@ export const randomPastTravelTime = () => {
 
 export const randomNowTravelTime = () => {
   // 开始日期
-  const startDate = moment().subtract(1, 'hours').toDate();
+  const startDate = moment().subtract(10, 'minutes').toDate();
   // 截止日期
   const endDate = new Date();
   // 出发时间

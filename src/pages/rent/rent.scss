@@ -1,0 +1,22 @@
+.page {
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    .box {
+      width: 4rem;
+      height: 4rem;
+      line-height: 4rem;
+      text-align: center;
+      font-size: 2rem;
+      color: #FFF;
+      margin: 0.3rem;
+    }
+    .full {
+      background-color: #ce2f2f;
+    }
+    .empty {
+      background-color: #2fce4a;
+    }
+  }
+}

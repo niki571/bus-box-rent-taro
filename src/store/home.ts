@@ -2,12 +2,11 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 11:49:29
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-02 02:38:22
+ * @LastEditTime: 2022-05-03 19:29:04
  */
 
 import { observable } from 'mobx';
 import { BaseStore } from './base.store';
-import { TicketOrderDataModel } from '../models/home';
 
 class HomeStore extends BaseStore {
   @observable
@@ -17,10 +16,6 @@ class HomeStore extends BaseStore {
     super();
     this.loading = false;
   }
-  // 造车票假数据，行李舱假数据，寄件假数据
-  mockDataAsync = async (TicketOrderData: TicketOrderDataModel) => {
-    return await this.post('question/createAswer', TicketOrderData);
-  };
 }
 
 export default new HomeStore();
