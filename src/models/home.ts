@@ -2,18 +2,20 @@
  * @Author: wuqianying
  * @Date: 2022-05-02 02:23:58
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-03 19:28:40
+ * @LastEditTime: 2022-05-03 21:26:53
  */
 import moment from 'moment';
+import { RentOrderData } from './order';
 import { randomPastTravelTime, randomNowTravelTime } from '../utils/utils';
 
-interface TicketOrderData {
+export interface TicketOrderData {
   from: string;
   to: string;
   busNo: string;
   ticketGate: string;
   departureTime: string;
   arrivalTime: string;
+  rentOrderDetail?: RentOrderData;
 }
 
 // 10个

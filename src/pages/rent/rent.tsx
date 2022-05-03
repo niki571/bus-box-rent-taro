@@ -2,13 +2,14 @@
  * @Author: wuqianying
  * @Date: 2022-05-02 17:29:59
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-03 20:52:53
+ * @LastEditTime: 2022-05-03 21:21:24
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
-import { View, Button, Text } from '@tarojs/components';
+import { View, Button } from '@tarojs/components';
 import { AtModal, AtModalHeader, AtModalContent, AtModalAction, AtInput } from 'taro-ui';
 import { observer, inject } from 'mobx-react';
+import moment from 'moment';
 
 import { showMessage } from '../../utils/toast';
 import { BusBoxData, getRandomBusBoxData } from '../../models/rent';
@@ -52,6 +53,7 @@ export default class Rent extends Component<RentProps, RentState> {
   componentWillUnmount() {}
 
   code: string;
+  boxId: number;
   timer: ReturnType<typeof setTimeout> | null;
 
   componentDidShow() {}
@@ -61,16 +63,23 @@ export default class Rent extends Component<RentProps, RentState> {
   handleChange() {}
 
   handleConfirm() {
+    let travelArr = Taro.getStorageSync('travelInfo');
+    travelArr[0].rentOrderDetail = {
+      boxId: this.boxId,
+      startTime: moment(new Date()).format('YYYY-MM-DD HH:mm'),
+    };
+    Taro.setStorageSync('travelInfo', travelArr);
     Taro.switchTab({
       url: '/pages/order/order',
     });
   }
 
-  handleBoxClick = (isEmpty) => {
+  handleBoxClick = (isEmpty, boxId) => {
     if (isEmpty) {
       let code = `${Math.ceil(Math.random() * 10000)}`;
       this.code = code.length === 3 ? '0' + code : code;
       showMessage(`此次密码为${this.code},请在密码锁输入密码！`);
+      this.boxId = boxId;
       this.timer = setTimeout(
         () =>
           this.setState({
@@ -96,7 +105,7 @@ export default class Rent extends Component<RentProps, RentState> {
                 <View
                   key={i}
                   className={item.empty ? 'box empty' : 'box full'}
-                  onClick={() => this.handleBoxClick(item.empty)}
+                  onClick={() => this.handleBoxClick(item.empty, i)}
                 >
                   {item.index + 1}
                 </View>

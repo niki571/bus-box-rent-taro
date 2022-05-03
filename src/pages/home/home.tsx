@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 14:33:36
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-03 20:47:22
+ * @LastEditTime: 2022-05-03 21:08:51
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
@@ -12,10 +12,11 @@ import { observer, inject } from 'mobx-react';
 import moment from 'moment';
 
 import './home.scss';
-import { getRandomTicketOrderData } from '../../models/home';
+import { TicketOrderData, getRandomTicketOrderData } from '../../models/home';
 
 interface HomeState {
   phoneNumber: string;
+  travelArr: TicketOrderData[];
 }
 
 interface HomeProps {
@@ -30,6 +31,15 @@ export default class Home extends Component<HomeProps, HomeState> {
   async componentWillMount() {
     const phoneNumber = Taro.getStorageSync('phoneNumber');
     this.setState({ phoneNumber });
+
+    let travelArr = Taro.getStorageSync('travelInfo');
+    if (travelArr) {
+      this.setState({ travelArr });
+    } else {
+      travelArr = getRandomTicketOrderData();
+      Taro.setStorageSync('travelInfo', travelArr);
+      this.setState({ travelArr });
+    }
   }
 
   rentBox() {
@@ -78,7 +88,7 @@ export default class Home extends Component<HomeProps, HomeState> {
   }
 
   render() {
-    const travelArr = getRandomTicketOrderData();
+    const travelArr = this.state.travelArr;
     const travelNow = travelArr.slice(0, 1);
     const travelPast = travelArr.slice(1);
     Taro.setStorageSync('todayTravel', travelNow[0]);
