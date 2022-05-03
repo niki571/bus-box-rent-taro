@@ -1,0 +1,32 @@
+.page {
+  .card-out {
+    border-radius: 20px;
+    background-color: #f5f2e2;
+    margin: 25px;
+    padding: 15px 25px;
+    .gate {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .card-in {
+      border-radius: 10px;
+      background-color: #e4ddc8;
+      margin: 12px 0;
+      padding: 25px 12px;
+      display: flex;
+      .col {
+        flex-grow: 1;
+      }
+      .center {
+        text-align: center;
+      }
+      .right {
+        text-align: right;
+      }
+      .time {
+        font-size: 60px;
+        color: #444;
+      }
+    }
+  }
+}

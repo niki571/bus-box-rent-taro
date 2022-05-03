@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 11:49:29
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-03 13:04:11
+ * @LastEditTime: 2022-05-03 17:21:48
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
@@ -10,7 +10,7 @@ import { View, Image } from '@tarojs/components';
 import { AtForm, AtInput, AtButton, AtTag } from 'taro-ui';
 import { observer, inject } from 'mobx-react';
 import { showMessage } from '../../utils/toast';
-import { testPhone } from '../../utils/utils';
+import { testPhone, hidePhone } from '../../utils/utils';
 
 import './login.scss';
 import squirrelImg from '../../assets/images/squirrel.jpeg';
@@ -75,6 +75,7 @@ export default class Login extends Component<LoginProps, LoginState> {
 
   onSubmit = (e) => {
     if (this.state.phoneNumber && testPhone(this.state.phoneNumber) && this.state.authCode) {
+      Taro.setStorageSync('phoneNumber', hidePhone(this.state.phoneNumber));
       Taro.switchTab({
         url: '/pages/home/home',
       });

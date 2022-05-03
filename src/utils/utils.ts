@@ -2,12 +2,18 @@
  * @Author: wuqianying
  * @Date: 2022-05-03 12:53:12
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-03 16:01:55
+ * @LastEditTime: 2022-05-03 17:20:10
  */
 import moment from 'moment';
 
 export function testPhone(phoneNumber) {
   return /^1[3456789]\d{9}$/.test(phoneNumber);
+}
+
+export function hidePhone(phoneNumber) {
+  let arr = phoneNumber.split('');
+  arr.splice(3, 4, '****');
+  return arr.join('');
 }
 
 const randomTime = (startDate, endDate) => {
@@ -31,8 +37,8 @@ export const randomPastTravelTime = () => {
   // 到达时间
   const arrivalTime = new Date(+departureTime + 30 * 60 * 1000 + Math.random() * 15 * 60 * 1000);
   return [
-    moment(departureTime).format('YYYY-MM-DD HH:mm:ss'),
-    moment(arrivalTime).format('YYYY-MM-DD HH:mm:ss'),
+    moment(departureTime).format('YYYY-MM-DD HH:mm'),
+    moment(arrivalTime).format('YYYY-MM-DD HH:mm'),
   ];
 };
 
@@ -46,7 +52,7 @@ export const randomNowTravelTime = () => {
   // 到达时间
   const arrivalTime = new Date(+endDate + 30 * 60 * 1000 + Math.random() * 15 * 60 * 1000);
   return [
-    moment(departureTime).format('YYYY-MM-DD HH:mm:ss'),
-    moment(arrivalTime).format('YYYY-MM-DD HH:mm:ss'),
+    moment(departureTime).format('YYYY-MM-DD HH:mm'),
+    moment(arrivalTime).format('YYYY-MM-DD HH:mm'),
   ];
 };

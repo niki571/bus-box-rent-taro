@@ -2,18 +2,19 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 14:33:36
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-03 16:10:54
+ * @LastEditTime: 2022-05-03 17:24:14
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
 import { View, Text } from '@tarojs/components';
 import { observer, inject } from 'mobx-react';
+import moment from 'moment';
 
 import './home.scss';
 import { getRandomTicketOrderData } from '../../models/home';
 
 interface HomeState {
-  code: string;
+  phoneNumber: string;
 }
 
 interface HomeProps {
@@ -25,39 +26,35 @@ interface HomeProps {
 @inject('homeStore')
 @observer
 export default class Home extends Component<HomeProps, HomeState> {
-  async componentWillMount() {}
-
-  async handleGetUserInfo(e) {
-    debugger;
-    Taro.getUserInfo({
-      success: function (res) {
-        var userInfo = res.userInfo;
-        console.log(6666, userInfo);
-      },
-    });
+  async componentWillMount() {
+    const phoneNumber = Taro.getStorageSync('phoneNumber');
+    this.setState({ phoneNumber });
   }
 
   render() {
     const travelArr = getRandomTicketOrderData();
-    // return <Text>{randomNowTravelTime()}</Text>;
     return (
       <View className='page'>
         {travelArr &&
           travelArr.map((item, i) => {
             return (
-              <View key={i}>
-                <Text>{item.from}</Text>
+              <View key={i} className='card-out'>
+                <Text className='gate'>检票口 {item.ticketGate}</Text>
 
-                <Text>{item.to}</Text>
-
-                <Text>{item.busNo}</Text>
-
-                <Text>{item.ticketGate}</Text>
-                <View></View>
-                <Text>{item.departureTime}</Text>
-                <View></View>
-                <Text>{item.arrivalTime}</Text>
-                <View></View>
+                <View key={i} className='card-in'>
+                  <View className='col'>
+                    <View>{item.from}</View>
+                    <View className='time'>{moment(item.departureTime).format('HH:mm')}</View>
+                  </View>
+                  <View className='col center'>
+                    <View>{item.busNo}</View>
+                  </View>
+                  <View className='col right'>
+                    <View>{item.to}</View>
+                    <View className='time'>{moment(item.arrivalTime).format('HH:mm')}</View>
+                  </View>
+                </View>
+                <View>{this.state.phoneNumber}</View>
               </View>
             );
           })}
