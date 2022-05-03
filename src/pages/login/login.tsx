@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 11:49:29
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-04 00:19:08
+ * @LastEditTime: 2022-05-04 00:43:56
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
@@ -59,7 +59,7 @@ export default class Login extends Component<LoginProps, LoginState> {
       return showMessage('请输入正确的手机号！');
     }
     if (this.state.authText === '发送验证码') {
-      let num = 60;
+      let num = 59;
       this.timer = setInterval(() => {
         if (num === 0) {
           this.setState({ authText: '发送验证码' });

@@ -2,7 +2,7 @@
  * @Author: wuqianying
  * @Date: 2022-04-22 14:33:44
  * @LastEditors: wuqianying
- * @LastEditTime: 2022-05-04 00:06:46
+ * @LastEditTime: 2022-05-04 01:00:50
  */
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
@@ -84,7 +84,7 @@ export default class Order extends Component<OrderProps, OrderState> {
               </View>
               <View className='status'>{endTime ? '已结束' : '正在进行'}</View>
             </View>
-            <View className='line'>{`${from}-->${to}  ${busNo}`}</View>
+            <View className='line'>行程：{`${from}-->${to}  ${busNo}`}</View>
             <View className='line'>订单开始时间：{startTime}</View>
             {endTime && <View className='line'>订单结束时间：{endTime}</View>}
             <View className='line'>行李舱序号：{boxId + 1}</View>
